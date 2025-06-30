@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Page Not Found</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: var(--light-bg);
+        font-family: "Poppins", sans-serif;
+      }
+
+      .error-box {
+        text-align: center;
+        padding: 40px;
+        border-radius: 12px;
+        background-color: var(--white-bg);
+        box-shadow: 0 4px 12px var(--card-shadow);
+      }
+
+      .error-box h1 {
+        font-size: 4em;
+        color: var(--primary-color);
+      }
+
+      .error-box p {
+        font-size: 1.2em;
+        margin: 20px 0;
+      }
+
+      .error-box a {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: var(--primary-color);
+        color: black;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+      }
+
+      .error-box a:hover {
+        background-color: var(--primary-hover);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-box">
+      <h1>404</h1>
+      <p>Oops! The page you're looking for doesn't exist.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </body>
+</html>

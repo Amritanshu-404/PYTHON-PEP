@@ -1,0 +1,37 @@
+{% if user.is_authenticated %}
+<header class="user_nav">
+  <a href="/" class="logo">Movies<span>Mosaic</span></a>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/entertainment/">Your Entertainment</a></li>
+      <li><a href="/playlist/">Playlist</a></li>
+    </ul>
+  </nav>
+  <div class="profile">
+    <div class="profile-pic">{{ user.username|slice:":1"|upper }}</div>
+    <div class="profile-info">
+      <div class="username">{{ user.username }}</div>
+      <div class="email">{{ user.email }}</div>
+    </div>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  </div>
+</header>
+{% else %}
+<!-- Home Page Navbar -->
+<header class="home_nav">
+  <div class="container">
+    <a href="/" class="logo">Movies<span>Mosaic</span></a>
+    <nav class="main-nav">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="/entertainment/">Your Entertainment</a></li>
+      </ul>
+    </nav>
+    <a href="{% url 'signup' %}" class="login-btn">Login / Signup</a>
+  </div>
+</header>
+{% endif %}

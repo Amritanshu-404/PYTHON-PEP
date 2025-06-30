@@ -1,0 +1,310 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your Playlist - Saved Movies & Reviews</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Container & Headings */
+      .container {
+        max-width: 1300px;
+        margin: 80px auto;
+      }
+      h1,
+      h2 {
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 36px;
+        font-size: 2.5rem;
+        letter-spacing: 1.2px;
+        color: #222;
+      }
+
+      /* Layout */
+      .main-row {
+        display: inline-flex;
+        gap: 32px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+
+      .movie-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 32px;
+      }
+      @media (max-width: 1200px) {
+        .movie-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 800px) {
+        .movie-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .main-row {
+          display: block;
+        }
+        .movie-grid {
+          grid-template-columns: 1fr;
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
+
+      /* Movie Card Styles */
+      .movie-card {
+        position: relative;
+        border-radius: 8px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        cursor: default;
+        display: flex;
+        flex-direction: column;
+        height: 380px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 250px;
+        background-color: #fff;
+      }
+      .movie-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      }
+      .movie-poster {
+        width: 100%;
+        height: auto;
+        max-height: 260px;
+        object-fit: contain;
+        border-radius: 16px 16px 0 0;
+        margin-bottom: 14px;
+        background-color: #f4f4f4;
+      }
+      .movie-details {
+        padding: 0 24px 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        color: #000;
+      }
+      .movie-title {
+        font-weight: 700;
+        font-size: 1em;
+        margin: 0;
+        color: #000;
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .movie-release {
+        font-size: 0.7em;
+        color: #444;
+      }
+      .movie-rating {
+        font-weight: 700;
+        font-size: 1em;
+        color: #fada7a;
+      }
+
+      /* Remove button for playlist */
+      .remove-btn {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+      .remove-btn:hover {
+        background: #ff1a1a;
+      }
+      .movie-card:hover .remove-btn {
+        opacity: 1;
+      }
+
+      /* Empty message */
+      .empty-message {
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.4em;
+        color: #666;
+        margin-top: 80px;
+      }
+
+      /* ===== Review Card Specific Styling ===== */
+      .review-card {
+        position: relative;
+        border-radius: 8px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        background-color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        min-height: 380px;
+        cursor: default;
+      }
+      .review-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .review-poster {
+        width: 100%;
+        height: 260px;
+        object-fit: contain;
+        border-radius: 16px 16px 0 0;
+        background-color: #f4f4f4;
+        margin-bottom: 14px;
+      }
+
+      .review-details {
+        padding: 0 24px 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: #222;
+      }
+      .review-title {
+        font-weight: 700;
+        font-size: 1em;
+        margin: 0;
+        color: #000;
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .review-release {
+        font-size: 0.7em;
+        color: #555;
+      }
+      .review-rating {
+        font-weight: 700;
+        font-size: 1.1em;
+        color: #fada7a;
+      }
+      .review-text {
+        font-size: 0.85em;
+        color: #444;
+        font-style: italic;
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* limit lines */
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+      }
+    </style>
+  </head>
+  <body>
+    {% include "partials/navbar.html" %}
+    <div class="container">
+      <div class="main-row">
+        <!-- Saved Playlist Movies -->
+        {% if movies %}
+        <h1>Your Playlist</h1>
+        <div class="movie-grid">
+          {% for item in movies %}
+          <div class="movie-card">
+            <img
+              src="{{ item.movie.poster_url }}"
+              alt="{{ item.movie.title }}"
+              class="movie-poster"
+            />
+            <div class="movie-details">
+              <a
+                href="{% url 'movie_detail' item.movie.tmdb_id %}"
+                class="movie-title"
+                title="{{ item.movie.title }}"
+              >
+                {{ item.movie.title }}
+              </a>
+              <div class="movie-release">{{ item.movie.release_date }}</div>
+              <div class="movie-rating">
+                {{ item.movie.rating|floatformat:1 }}/10
+              </div>
+            </div>
+            <form
+              method="post"
+              action="{% url 'remove_from_playlist' item.movie.tmdb_id %}"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="remove-btn"
+                title="Remove from Playlist"
+              >
+                &times;
+              </button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-message">
+          You have no saved movies in your playlist.
+        </div>
+        {% endif %}
+
+        <!-- Saved Reviews Section -->
+        {% if saved_reviews %}
+        <h2 style="margin-top: 60px">Your Past Reviews</h2>
+        <div class="movie-grid">
+          {% for saved in saved_reviews %}
+          <div class="review-card">
+            <img
+              src="{{ saved.movie.poster_url }}"
+              alt="{{ saved.movie.title }}"
+              class="review-poster"
+            />
+            <div class="review-details">
+              <a
+                href="{% url 'movie_detail' saved.movie.tmdb_id %}"
+                class="review-title"
+                title="{{ saved.movie.title }}"
+              >
+                {{ saved.movie.title }}
+              </a>
+              <div class="review-release">{{ saved.movie.release_date }}</div>
+              <div class="review-rating">
+                ⭐ {{ saved.review.rating|floatformat:1 }}/10
+              </div>
+              <div class="review-text">"{{ saved.review.review_text }}"</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Food Order System (Sync)</title>
+</head>
+
+<body>
+    <h1>Hotel Food Order System (Sync with Callback)</h1>
+    <script>
+        function takeOrder(customer, callback) {
+            console.log(`Taking order from ${customer}...`);
+            setTimeout(() => {
+                console.log(`Order taken for ${customer}`);
+                callback(customer);
+            }, 2000);
+        }
+
+        function serveOrder(customer) {
+            console.log(`Serving order to ${customer}`);
+        }
+
+        takeOrder("Customer 1", serveOrder);
+    </script>
+</body>
+
+</html>

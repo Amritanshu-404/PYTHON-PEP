@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexbox Demo</title>
+    <style>
+      .flex-container {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #333;
+        background: #f9f9f9;
+  
+        
+      }
+      .flex-item {
+        background: #ffb6b9;
+        color: #333;
+        padding: 20px;
+        margin: 10px;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        /* flex: 1 1 100px; */
+        text-align: center;
+        /* border-radius: 1% 100em; */
+      }
+      #div1{
+        background-color: aqua;
+      }
+      #div2 {
+        background-color: yellowgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Flexbox Properties Demo</h1>
+    <div class="flex-container">
+      <div class="flex-item" id="div1">Item 1</div>
+      <div class="flex-item" id="div2">Item 2</div>
+      <div class="flex-item" id="div3">Item 3</div>
+    </div>
+  </body>
+</html>

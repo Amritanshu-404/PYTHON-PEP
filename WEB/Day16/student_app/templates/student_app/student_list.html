@@ -1,0 +1,17 @@
+<h2>Student List</h2>
+<form method="POST">
+  {% csrf_token %} Name: <input type="text" name="name" /> Age:
+  <input type="number" name="age" /> Course: <input type="text" name="course" />
+  <button type="submit">Add</button>
+</form>
+
+<ul>
+  {% for student in students %}
+  <li>
+    {{ student.name }} - {{ student.age }} - {{ student.course }} [<a
+      href="{% url 'edit_student' student.id %}"
+      >Edit</a
+    >] [<a href="{% url 'delete_student' student.id %}">Delete</a>]
+  </li>
+  {% endfor %}
+</ul>
